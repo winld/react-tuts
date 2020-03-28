@@ -1,6 +1,18 @@
 import React, { Component } from "react";
 import TodoItem from "./TodoItem/index.js";
+import PropTypes from "prop-types";
+
 export default class index extends Component {
+  static propTypes = {
+    todos: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        title: PropTypes.string.isRequired,
+        isComponented: PropTypes.bool.isRequired
+      })
+    ).isRequired,
+    onCompeletedChange: PropTypes.func
+  };
   render() {
     console.log(this.props.todos);
     return (
@@ -12,7 +24,11 @@ export default class index extends Component {
             //   title={todo.title}
             //   isComponented={todo.isComponented ? "已完成" : "未完成"}
             // />
-            <TodoItem key={todo.id} {...todo}></TodoItem>
+            <TodoItem
+              onCompeletedChange={this.props.onCompeletedChange}
+              key={todo.id}
+              {...todo}
+            ></TodoItem>
           );
         })}
       </ul>

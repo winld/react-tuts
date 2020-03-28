@@ -42,7 +42,6 @@ export default class TodoInput extends Component {
         this.inputDom.current.focus();
       }
     );
-    console.log(this.state.checkValue);
   };
   checkChange = e => {
     this.setState({

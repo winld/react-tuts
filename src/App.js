@@ -17,7 +17,6 @@ export default class App extends Component {
     };
   }
   addTodo = todoData => {
-    console.log(todoData);
     //这样写出事了，3不是一个数组，因为push语句返回的是数据的长度
     // this.setState({
     //   todos: this.state.todos.push({

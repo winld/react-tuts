@@ -2,33 +2,13 @@ import React from "react";
 import { render } from "react-dom";
 
 //定义组件的 定义组件的第二种方式，使用类继承React.Component
-// const app = {
-//   tag: "div",
-//   attr: {
-//     className: "app",
-//     id: "appRoot"
-//   },
-//   children: [
-//     {
-//       tag: "h1",
-//       attr: {
-//         className: title
-//       },
-//       children: ["jsx的原理"]
-//     }
-//   ]
-// };
-//所以rect在真正的渲染的时候会把上面的代码变异为下面的样子来圆形，下面的代码就是合法的js代码
 class App extends React.Component {
   render() {
-    return React.createElement(
-      "div",
-      { className: "app", id: "appRoot" },
-      React.createElement("h1", { className: "title" }, "sdgsgs")
+    return (
+      <div className='app' id='appRoot'>
+        <h1>{this.props.titile}</h1>
+      </div>
     );
-    // <div className='app' id='appRoot'>
-    //   <h1 className='title'>{this.props.titile}</h1>
-    // </div>
   }
 }
 //类组件渲染的原理

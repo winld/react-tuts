@@ -30,7 +30,7 @@ export default class TodoInput extends Component {
     }
     const inputDate = {
       title: this.state.inputVale,
-      isComponented: this.state.checkValue
+      completed: this.state.checkValue
     };
     this.props.addTodo(inputDate);
     this.setState(

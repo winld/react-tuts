@@ -8,7 +8,7 @@ export default class index extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        isComponented: PropTypes.bool.isRequired
+        completed: PropTypes.bool.isRequired
       })
     ).isRequired,
     onCompeletedChange: PropTypes.func
@@ -22,7 +22,7 @@ export default class index extends Component {
             // <TodoItem
             //   id={todo.id}
             //   title={todo.title}
-            //   isComponented={todo.isComponented ? "已完成" : "未完成"}
+            //   completed={todo.completed ? "已完成" : "未完成"}
             // />
             <TodoItem
               onCompeletedChange={this.props.onCompeletedChange}

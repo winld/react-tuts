@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { TodoHeader, TodoInput, TodoList, Like } from "./components";
-
+import { getTodos } from "./services";
 export default class App extends Component {
   //   state = {
   //     title: "待办事项"
@@ -12,20 +12,8 @@ export default class App extends Component {
       title: "待办事项",
       desc: "描述",
       article: "<div>文字</div>",
-      todos: [
-        {
-          id: 1,
-          title: "吃饭",
-          assignee: "leo",
-          isComponented: true
-        },
-        {
-          id: 2,
-          title: "睡觉",
-          assignee: "ll",
-          isComponented: false
-        }
-      ]
+      todos: [],
+      isLoading: false
     };
   }
   addTodo = todoData => {
@@ -35,7 +23,7 @@ export default class App extends Component {
     //   todos: this.state.todos.push({
     //     id: Math.random(),
     //     title: todoData.todoTitle,
-    //     isComponented: todoData.isComponented
+    //     completed: todoData.completed
     //   })
     // });
 
@@ -44,7 +32,7 @@ export default class App extends Component {
     //   todos: this.state.todos.concat({
     //     id: Math.random(),
     //     title: todoData.todoTitle,
-    //     isComponented: todoData.isComponented
+    //     completed: todoData.completed
     //   })
     // });
     // const newTodos = this.state.todos.slice();
@@ -52,7 +40,7 @@ export default class App extends Component {
     newTodos.push({
       id: Math.random(),
       title: todoData.title,
-      isComponented: todoData.isComponented
+      completed: todoData.completed
     });
     this.setState({
       todos: newTodos
@@ -63,13 +51,40 @@ export default class App extends Component {
       return {
         todos: prevState.todos.map(todo => {
           if (todo.id === id) {
-            todo.isComponented = !todo.isComponented;
+            todo.completed = !todo.completed;
           }
           return todo;
         })
       };
     });
   };
+
+  getTodoData = () => {
+    this.setState({
+      isLoading: true
+    });
+    getTodos()
+      .then(resp => {
+        console.log(resp);
+        if (resp.status === 200) {
+          this.setState({
+            todos: resp.data
+          });
+        } else {
+          //错误处理
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
+  };
+  componentDidMount() {
+    this.getTodoData();
+    // console.log(this.http.getTodos);
+  }
   render() {
     return (
       <Fragment>
@@ -81,10 +96,15 @@ export default class App extends Component {
           {this.state.title}
         </TodoHeader>
         <TodoInput textBtn='add' addTodo={this.addTodo} />
-        <TodoList
-          todos={this.state.todos}
-          onCompeletedChange={this.onCompeletedChange}
-        />
+        {this.state.isLoading ? (
+          <div>loading.....</div>
+        ) : (
+          <TodoList
+            todos={this.state.todos}
+            onCompeletedChange={this.onCompeletedChange}
+          />
+        )}
+
         <Like />
       </Fragment>
     );

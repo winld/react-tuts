@@ -5,13 +5,13 @@ export default class index extends Component {
   // constructor(props) {
   //   super();
   //   this.state = {
-  //     componentText: props.isComponented ? "已完成" : "未完成"
+  //     componentText: props.completed ? "已完成" : "未完成"
   //   };
   // }
   // //那么需要借助于UNSAFE_componentWillReceiveProps来做一次修正
   // UNSAFE_componentWillReceiveProps(nextProps) {
   //   this.setState({
-  //     componentText: nextProps.isComponented ? "已完成" : "未完成"
+  //     componentText: nextProps.completed ? "已完成" : "未完成"
   //   });
   // }
 
@@ -25,7 +25,7 @@ export default class index extends Component {
   static getDerivedStateFromProps(props) {
     //不管是更新还是初始化中都会执行
     return {
-      componentText: props.isComponented ? "已完成" : "未完成"
+      componentText: props.completed ? "已完成" : "未完成"
     };
   }
   handelChange = () => {
@@ -37,21 +37,21 @@ export default class index extends Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.isComponented !== this.props.isComponented;
+    return nextProps.completed !== this.props.completed;
   }
 
   render() {
     console.log(`${this.props.title}`);
-    const { id, title, isComponented } = this.props;
+    const { id, title, completed } = this.props;
     return (
       <li key={id} id={id}>
         <input
           type='checkbox'
-          checked={isComponented}
+          checked={completed}
           onChange={this.handelChange}
         />
         <span>
-          {/* {title} {isComponented ? "已完成" : "未完成"} */}
+          {/* {title} {completed ? "已完成" : "未完成"} */}
           {title} {this.state.componentText}
         </span>
       </li>
